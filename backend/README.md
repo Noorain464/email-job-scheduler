@@ -1,5 +1,7 @@
 # Email scheduler backend
 
+For full-stack setup, architecture, feature status, demo checklist, and assignment trade-offs, see the [project README](../README.md).
+
 ## Run locally
 
 Start MySQL and Redis first. Copy `.env.example` to `.env`, fill in the database and Redis settings, and set:
@@ -38,6 +40,3 @@ Before sending, the worker atomically changes the MySQL row from `scheduled` to 
 
 SMTP does not provide an idempotency key. If the worker stops after the SMTP server accepts a message but before MySQL records `sent`, the row can remain `sending`. The worker will not resend it automatically, to avoid duplicates, so that ambiguous result needs manual review.
 
-## Slack notification status
-
-Slack notifications are not implemented. The worker logs when a sender reaches its hourly cap; it does not send a Slack message.
